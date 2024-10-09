@@ -5,6 +5,7 @@ import { createContext, FC, ReactNode, useContext, useEffect } from 'react';
 interface VariableContextInterface {
   billingEnabled: boolean;
   isGeneral: boolean;
+  enableOpenID: boolean;
   frontEndUrl: string;
   plontoKey: string;
   storageProvider: 'local' | 'cloudflare',
@@ -15,6 +16,7 @@ interface VariableContextInterface {
 const VariableContext = createContext({
   billingEnabled: false,
   isGeneral: true,
+  enableOpenID: true,
   frontEndUrl: '',
   storageProvider: 'local',
   plontoKey: '',
