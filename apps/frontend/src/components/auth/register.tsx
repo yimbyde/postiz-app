@@ -83,7 +83,7 @@ export function RegisterAfter({
   token: string;
   provider: string;
 }) {
-  const {isGeneral} = useVariables();
+  const {isGeneral, enableOpenID} = useVariables();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const fireEvents = useFireEvents();
@@ -135,7 +135,7 @@ export function RegisterAfter({
     })
   };
 
-  return (
+  return enableOpenID ? "You can't register" :(
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div>

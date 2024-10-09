@@ -9,6 +9,7 @@ import { useMemo, useState } from 'react';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { LoginUserDto } from '@gitroom/nestjs-libraries/dtos/auth/login.user.dto';
 import { GithubProvider } from '@gitroom/frontend/components/auth/providers/github.provider';
+import { OpenIDProvider } from '@gitroom/frontend/components/auth/providers/openid.provider';
 import interClass from '@gitroom/react/helpers/inter.font';
 import { GoogleProvider } from '@gitroom/frontend/components/auth/providers/google.provider';
 import { useVariables } from '@gitroom/react/helpers/variable.context';
@@ -22,7 +23,7 @@ type Inputs = {
 
 export function Login() {
   const [loading, setLoading] = useState(false);
-  const {isGeneral} = useVariables();
+  const {isGeneral, enableOpenID} = useVariables();
   const resolver = useMemo(() => {
     return classValidatorResolver(LoginUserDto);
   }, []);
@@ -53,7 +54,7 @@ export function Login() {
     }
   };
 
-  return (
+  return enableOpenID ? <OpenIDProvider /> : ( 
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div>
