@@ -35,7 +35,7 @@ VOLUME /uploads
 
 LABEL org.opencontainers.image.source=https://github.com/yimbyde/postiz-app
 
-ENTRYPOINT ["sh", "/app/entrypoint.sh"]
+ENTRYPOINT ["/app/entrypoint.sh"]
 
 # Builder image
 FROM base AS devcontainer
