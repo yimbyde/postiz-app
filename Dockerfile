@@ -7,7 +7,7 @@
 ARG NODE_VERSION="20.17"
 
 # Base image
-FROM --platform=$BUILDPLATFORM docker.io/node:${NODE_VERSION}-alpine3.19 AS base
+FROM docker.io/node:${NODE_VERSION}-alpine3.19 AS base
 
 ## Just reduce unccessary noise in the logs.
 ENV NPM_CONFIG_UPDATE_NOTIFIER=false
@@ -16,7 +16,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN apk add --no-cache \
 	caddy \
 	bash=5.2.21-r0 \
-	supervisor=4.2.5-r5
+	supervisor=4.2.5-r4
 
 WORKDIR /app
 
@@ -38,7 +38,7 @@ LABEL org.opencontainers.image.source=https://github.com/yimbyde/postiz-app
 ENTRYPOINT ["sh", "/app/entrypoint.sh"]
 
 # Builder image
-FROM --platform=$BUILDPLATFORM base AS devcontainer
+FROM base AS devcontainer
 
 RUN apk add --no-cache \
 	pkgconfig \
@@ -61,7 +61,7 @@ VOLUME /uploads
 LABEL org.opencontainers.image.title="Postiz App (DevContainer)"
 
 # Output image
-FROM --platform=$BUILDPLATFORM  base AS dist
+FROM base AS dist
 
 COPY --from=devcontainer /app/node_modules/ /app/node_modules/
 COPY --from=devcontainer /app/dist/ /app/dist/
