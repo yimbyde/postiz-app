@@ -16,7 +16,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN apk add --no-cache \
 	caddy \
 	bash=5.2.21-r0 \
-	supervisor=4.2.5-r4
+	supervisor=4.2.5-r5
 
 WORKDIR /app
 
@@ -33,9 +33,9 @@ COPY .env.example /config/postiz.env
 VOLUME /config
 VOLUME /uploads
 
-LABEL org.opencontainers.image.source=https://github.com/gitroomhq/postiz-app
+LABEL org.opencontainers.image.source=https://github.com/yimbyde/postiz-app
 
-ENTRYPOINT ["/app/entrypoint.sh"]
+ENTRYPOINT ["sh", "/app/entrypoint.sh"]
 
 # Builder image
 FROM --platform=$BUILDPLATFORM base AS devcontainer
