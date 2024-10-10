@@ -38,7 +38,7 @@ LABEL org.opencontainers.image.source=https://github.com/gitroomhq/postiz-app
 ENTRYPOINT ["/app/entrypoint.sh"]
 
 # Builder image
-FROM base AS devcontainer
+FROM --platform=$BUILDPLATFORM base AS devcontainer
 
 RUN apk add --no-cache \
 	pkgconfig \
@@ -61,7 +61,7 @@ VOLUME /uploads
 LABEL org.opencontainers.image.title="Postiz App (DevContainer)"
 
 # Output image
-FROM base AS dist
+FROM--platform=$BUILDPLATFORM  base AS dist
 
 COPY --from=devcontainer /app/node_modules/ /app/node_modules/
 COPY --from=devcontainer /app/dist/ /app/dist/
