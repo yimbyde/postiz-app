@@ -61,7 +61,7 @@ VOLUME /uploads
 LABEL org.opencontainers.image.title="Postiz App (DevContainer)"
 
 # Output image
-FROM--platform=$BUILDPLATFORM  base AS dist
+FROM --platform=$BUILDPLATFORM  base AS dist
 
 COPY --from=devcontainer /app/node_modules/ /app/node_modules/
 COPY --from=devcontainer /app/dist/ /app/dist/
