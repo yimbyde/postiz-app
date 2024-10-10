@@ -7,7 +7,7 @@
 ARG NODE_VERSION="20.17"
 
 # Base image
-FROM docker.io/node:${NODE_VERSION}-alpine3.19 AS base
+FROM docker.io/node:${NODE_VERSION}-alpine3.19 --platform=$BUILDPLATFORM AS base
 
 ## Just reduce unccessary noise in the logs.
 ENV NPM_CONFIG_UPDATE_NOTIFIER=false
