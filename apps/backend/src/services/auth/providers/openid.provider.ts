@@ -18,10 +18,10 @@ export class OpenIDProvider implements ProvidersInterface {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': `Basic ${this.clientSecret}`,
         },
         body: new URLSearchParams({
           client_id: this.clientId,
-          client_secret: this.clientSecret,
           code: code,
           grant_type: 'authorization_code',
           redirect_uri: this.redirectUri,
