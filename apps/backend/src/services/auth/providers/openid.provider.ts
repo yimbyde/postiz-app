@@ -13,7 +13,7 @@ export class OpenIDProvider implements ProvidersInterface {
   }
 
   async getToken(code: string): Promise<string> {
-    const { access_token } = await (
+    const response = await (
       await fetch(this.tokenUrl, {
         method: 'POST',
         headers: {
@@ -27,7 +27,19 @@ export class OpenIDProvider implements ProvidersInterface {
           redirect_uri: this.redirectUri,
         }).toString(),
       })
-    ).json();
+    )
+    
+    // Check if the response is OK before parsing
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Failed to fetch token: ${response.status} ${response.statusText} - ${errorText}`);
+    }
+
+    const { access_token } = await response.json();
+
+    if (!access_token) {
+      throw new Error('Access token not found in response');
+    }
 
     return access_token;
   }
